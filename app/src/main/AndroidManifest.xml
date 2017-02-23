@@ -15,6 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="com.example.cr554.inventoryapp"
+            android:name=".database.InventoryProvider"
+            android:exported = "false"/>
     </application>
 
 </manifest>
