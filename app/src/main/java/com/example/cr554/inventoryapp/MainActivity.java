@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     InventoryEntry.COLUMN_QUANTITY + "\n");
 
 
-        }finally {
+        }finally{
             cursor.close();
 
         }
