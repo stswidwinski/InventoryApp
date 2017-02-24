@@ -1,9 +1,12 @@
 package com.example.cr554.inventoryapp;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.cr554.inventoryapp.database.InventoryDBHelper;
@@ -16,9 +19,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //need a button for add edit and delete eventually
-
+        //have fab open editor activity
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(MainActivity.this,EditActivity.class);
+                startActivity(intent);
+            }
+        });
         //access the database by instantiating the InventoryDBHelper subclass of SQLiteOpenHelper
         mDbHelper = new InventoryDBHelper(this);
     }
