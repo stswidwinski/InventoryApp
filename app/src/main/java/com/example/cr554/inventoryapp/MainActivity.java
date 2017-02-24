@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
         }finally{
             cursor.close();
-
         }
-
     }
 }

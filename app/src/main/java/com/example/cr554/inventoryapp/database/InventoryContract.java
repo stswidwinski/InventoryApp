@@ -21,5 +21,4 @@ public final class InventoryContract {
         public static final String COLUMN_SUPPLIER = "supplier"; //TEXT
         public static final String _ID = BaseColumns._ID; //INT
     }
-
 }
