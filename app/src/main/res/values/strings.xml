@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">InventoryApp</string>
+    <string name="edit_name">Name of Product</string>
+    <string name="edit_supplier">Supplier of Product</string>
+    <string name="edit_price">$ of Product</string>
+    <string name="edit_quantity"># of Product</string>
 </resources>

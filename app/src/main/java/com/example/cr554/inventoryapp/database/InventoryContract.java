@@ -8,17 +8,15 @@ import android.provider.BaseColumns;
  */
 
 public final class InventoryContract {
-    private static final String TEXT_TYPE = "TEXT";
-    private static final String COMMA_SEPERATOR = ",";
 
     private InventoryContract(){}
 
     public static abstract class InventoryEntry implements BaseColumns{
-        public static final String TABLE_NAME = "inventory"; //TEXT
-        public static final String COLUMN_NAME = "name"; //TEXT
-        public static final String COLUMN_PRICE = "price"; //REAL
-        public static final String COLUMN_QUANTITY= "quantity"; //INT
-        public static final String COLUMN_SUPPLIER = "supplier"; //TEXT
-        public static final String _ID = BaseColumns._ID; //INT
+        public static final String TABLE_NAME = "inventory";        //TEXT
+        public static final String COLUMN_NAME = "name";            //TEXT
+        public static final String COLUMN_PRICE = "price";          //REAL
+        public static final String COLUMN_QUANTITY= "quantity";     //INT
+        public static final String COLUMN_SUPPLIER = "supplier";    //TEXT
+        public static final String _ID = BaseColumns._ID;           //INT
     }
 }
