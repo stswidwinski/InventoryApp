@@ -5,6 +5,7 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.LoaderManager;
@@ -13,8 +14,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.cr554.inventoryapp.database.InventoryContract;
 import com.example.cr554.inventoryapp.database.InventoryContract.InventoryEntry;
 
 
@@ -31,7 +34,7 @@ import com.example.cr554.inventoryapp.database.InventoryContract.InventoryEntry;
  */
 
 public class EditActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
-    private static int EXISITNG_ITEM_LOADER =0;
+    private static final int EXISTING_PET_LOADER =0;
     private Uri mCurrentItemUri;
     private EditText mNameEditText;
     private EditText mSupplierEditText;
@@ -46,8 +49,11 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         Button cancelButton = (Button) findViewById(R.id.cancel);
         Button submitButton = (Button) findViewById(R.id.submit);
 
-
-
+        //find the relevant views
+        mNameEditText = (EditText) findViewById(R.id.edit_name);
+        mSupplierEditText = (EditText) findViewById(R.id.edit_supplier);
+        mPriceEditText = (EditText) findViewById(R.id.edit_price);
+        mQuantityEditText = (EditText) findViewById(R.id.edit_quantity);
 
         // we're inspecting the intent for the URI. if its null, we're creating a new data point,
         // else we're editing a current one.
@@ -57,19 +63,11 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             setTitle("Add Item");
             deleteButton.setVisibility(View.GONE); //no sense deleting something that is being added to the data base
         }else{
+            //get current URI's info for each file
+
             setTitle("Edit Item");
+            getLoaderManager().initLoader(EXISTING_PET_LOADER,null,this);
         }
-
-
-
-        //find the relevant views
-        mNameEditText = (EditText) findViewById(R.id.edit_name);
-        mSupplierEditText = (EditText) findViewById(R.id.edit_supplier);
-        mPriceEditText = (EditText) findViewById(R.id.edit_price);
-        mQuantityEditText = (EditText) findViewById(R.id.edit_quantity);
-
-
-
         //set onclick for submit
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -144,7 +142,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //determine if we are entering a new entry or editing an old one
 
-        if(mCurrentItemUri == null){
+        if(mCurrentItemUri == null){ //then we're dealing with a new entry
             Uri newURi = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
 
             if (newURi == null) {
@@ -152,7 +150,8 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             }else{
                 Toast.makeText(this, "success",Toast.LENGTH_SHORT).show();
             }
-        }else{
+        }else{ //we're editing an existing entry
+
             int rowsAffected = getContentResolver().update(mCurrentItemUri,values,null,null);
             if (rowsAffected==0){
                 Toast.makeText(this,"no rows affected",Toast.LENGTH_SHORT).show();
@@ -202,8 +201,8 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             //update the views
             mNameEditText.setText(name);
             mSupplierEditText.setText(supplier);
-            mPriceEditText.setText(Double.toString(price));
-            mQuantityEditText.setText(quantity);
+            mPriceEditText.setText(String.valueOf(price));
+            mQuantityEditText.setText(String.valueOf(quantity));
         }
 
     }
