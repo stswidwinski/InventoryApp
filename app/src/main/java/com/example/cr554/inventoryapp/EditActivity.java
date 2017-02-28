@@ -5,7 +5,6 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.LoaderManager;
@@ -14,10 +13,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.cr554.inventoryapp.database.InventoryContract;
 import com.example.cr554.inventoryapp.database.InventoryContract.InventoryEntry;
 
 
@@ -34,7 +31,7 @@ import com.example.cr554.inventoryapp.database.InventoryContract.InventoryEntry;
  */
 
 public class EditActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
-    private static final int EXISTING_INVENTORY_LOADER =0;
+    private static final int EXISTING_INVENTORY_LOADER = 1;
     private Uri mCurrentItemUri;
     private EditText mNameEditText;
     private EditText mSupplierEditText;
@@ -68,6 +65,9 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             setTitle("Edit Item");
             getLoaderManager().initLoader(EXISTING_INVENTORY_LOADER,null,this);
         }
+
+        //TODO: add onTouchListener to the edit views to highlight everything inside the edit text when the user selects it.
+
         //set onclick for submit
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -92,7 +92,6 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
     }
-
 
     //delete button func
     private void deleteItem(){
@@ -123,7 +122,6 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
                 && TextUtils.isEmpty(quantityString)){
             return;
         }
-
         ContentValues values = new ContentValues();
         values.put(InventoryEntry.COLUMN_NAME,nameString);
         values.put(InventoryEntry.COLUMN_SUPPLIER,supplierString);
@@ -141,17 +139,14 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(InventoryEntry.COLUMN_QUANTITY,quantity);
 
         //determine if we are entering a new entry or editing an old one
-
         if(mCurrentItemUri == null){ //then we're dealing with a new entry
             Uri newURi = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
-
             if (newURi == null) {
                 Toast.makeText(this, "failure",Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(this, "success",Toast.LENGTH_SHORT).show();
             }
         }else{ //we're editing an existing entry
-
             int rowsAffected = getContentResolver().update(mCurrentItemUri,values,null,null);
             if (rowsAffected==0){
                 Toast.makeText(this,"no rows affected",Toast.LENGTH_SHORT).show();
@@ -159,7 +154,6 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
                 Toast.makeText(this,rowsAffected+" rows affected",Toast.LENGTH_SHORT).show();
             }
         }
-
         finish();
     }
 
@@ -204,7 +198,6 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             mPriceEditText.setText(String.valueOf(price));
             mQuantityEditText.setText(String.valueOf(quantity));
         }
-
     }
 
     @Override
@@ -214,5 +207,4 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         mPriceEditText.setText("");
         mQuantityEditText.setText("");
     }
-
 }

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements
         //find list view
         ListView itemListView = (ListView) findViewById(R.id.inventory_list);
 
-        //set up adatper to create list item for each row of pet data in the cursor
+        //set up adapter to create list item for each row of pet data in the cursor
         mCursorAdapter = new InventoryCursorAdapter(this, null);
         itemListView.setAdapter(mCursorAdapter);
 
