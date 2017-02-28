@@ -6,7 +6,6 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-
 import com.example.cr554.inventoryapp.adapter.InventoryCursorAdapter;
-import com.example.cr554.inventoryapp.database.InventoryDBHelper;
 import com.example.cr554.inventoryapp.database.InventoryContract.InventoryEntry;
 
 public class MainActivity extends AppCompatActivity implements

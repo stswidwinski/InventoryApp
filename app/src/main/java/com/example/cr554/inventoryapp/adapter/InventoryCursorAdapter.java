@@ -18,7 +18,7 @@ import com.example.cr554.inventoryapp.database.InventoryContract;
  */
 
 public class InventoryCursorAdapter extends CursorAdapter {
-    public InventoryCursorAdapter(Context context, Cursor cursor){
+    public InventoryCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
     }
 
@@ -43,7 +43,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
 
         //extract the values from the cursor
         String name = cursor.getString(nameColumnIndex);
-        String supplier =  cursor.getString(supplierColumnIndex);
+        String supplier = cursor.getString(supplierColumnIndex);
         double price = cursor.getDouble(priceColumnIndex);
         int quantity = cursor.getInt(quantityColumnIndex);
 
@@ -52,6 +52,5 @@ public class InventoryCursorAdapter extends CursorAdapter {
         supplierTextView.setText(supplier);
         priceTextView.setText(String.valueOf(price));
         quantityTextView.setText(String.valueOf(quantity));
-
     }
 }
