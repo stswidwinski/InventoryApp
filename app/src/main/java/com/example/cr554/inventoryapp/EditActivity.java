@@ -1,13 +1,13 @@
 package com.example.cr554.inventoryapp;
 
 import android.content.ContentValues;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+import android.app.LoaderManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,9 +17,6 @@ import android.widget.Toast;
 
 import com.example.cr554.inventoryapp.database.InventoryContract.InventoryEntry;
 
-import org.w3c.dom.Text;
-
-import static android.view.View.GONE;
 
 /**
  * Created by cr554 on 2/24/2017.
@@ -40,17 +37,18 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
     private EditText mSupplierEditText;
     private EditText mPriceEditText;
     private EditText mQuantityEditText;
-    private Button submitButton;
-    private Button cancelButton;
-    private Button deleteButton;
 
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        deleteButton = (Button) findViewById(R.id.delete);
-        cancelButton = (Button) findViewById(R.id.cancel);
-        submitButton = (Button) findViewById(R.id.submit);
+        Button deleteButton = (Button) findViewById(R.id.delete);
+        Button cancelButton = (Button) findViewById(R.id.cancel);
+        Button submitButton = (Button) findViewById(R.id.submit);
+
+
+
+
         // we're inspecting the intent for the URI. if its null, we're creating a new data point,
         // else we're editing a current one.
         Intent intent = getIntent();
@@ -62,13 +60,14 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             setTitle("Edit Item");
         }
 
+
+
         //find the relevant views
         mNameEditText = (EditText) findViewById(R.id.edit_name);
         mSupplierEditText = (EditText) findViewById(R.id.edit_supplier);
         mPriceEditText = (EditText) findViewById(R.id.edit_price);
         mQuantityEditText = (EditText) findViewById(R.id.edit_quantity);
 
-        //set onclick for delete
 
 
         //set onclick for submit
@@ -78,6 +77,35 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
                 saveItem();
             }
         });
+
+        //set onclick for delete
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteItem();
+            }
+        });
+
+        //set onclick for cancel
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+
+    //delete button func
+    private void deleteItem(){
+        if (mCurrentItemUri!=null){
+            int rowsDeleted = getContentResolver().delete(mCurrentItemUri, null, null);
+            if (rowsDeleted ==0){
+                Toast.makeText(this, "nothing to delete",Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this,"delete success",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     //submit button func
@@ -102,7 +130,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(InventoryEntry.COLUMN_NAME,nameString);
         values.put(InventoryEntry.COLUMN_SUPPLIER,supplierString);
 
-        //plugs corner case where price or quanity are left blank by defaulting thme to 0
+        //plugs corner case where price or quantity are left blank by defaulting them to 0
         double price = 0.00;
         int quantity = 0;
         if(!TextUtils.isEmpty(priceString)){
@@ -132,6 +160,8 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
                 Toast.makeText(this,rowsAffected+" rows affected",Toast.LENGTH_SHORT).show();
             }
         }
+
+        finish();
     }
 
     @Override
