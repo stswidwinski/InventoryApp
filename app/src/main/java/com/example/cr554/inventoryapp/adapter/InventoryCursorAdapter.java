@@ -15,6 +15,10 @@ import com.example.cr554.inventoryapp.database.InventoryContract;
  * Created by cr554 on 2/24/2017.
  * A custom Cursor Adapter for the Inventory Database.
  * The Cursor adapter takes info from a Cursor and displays it to a list view.
+ *
+ * more specifically: newView-> creates a new object of the inflated layout (in this case list_view_item.xml)
+ * bindview-> populates that copy
+ * view.setAdapter -> populates the given view(in our case the Listview in activity_main.xml) with the layouts created from the adapter
  */
 
 public class InventoryCursorAdapter extends CursorAdapter {
@@ -24,6 +28,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        //create a new copy of list_view_item.xml
         return LayoutInflater.from(context).inflate(R.layout.list_view_item, parent, false);
     }
 

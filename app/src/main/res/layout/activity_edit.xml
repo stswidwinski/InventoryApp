@@ -55,3 +55,5 @@
         android:id="@+id/delete"
         android:text="delete"/>
 </RelativeLayout>
+
+<!-- TODO: String resource file all of the hard coded strings -->

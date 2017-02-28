@@ -13,19 +13,20 @@ import com.example.cr554.inventoryapp.database.InventoryContract.InventoryEntry;
 /**
  * Created by cr554 on 2/23/2017.
  * Content Provider for the inventory database
- * ContentProviders
  */
 
 public class InventoryProvider extends ContentProvider {
 
-
+    private InventoryDBHelper mDbHelper;
     private static final int INVENTORY = 100;
     private static final int INVENTORY_ID= 101;
-    private InventoryDBHelper mDbHelper;
+
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static{
-        sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY,InventoryContract.PATH_INVENTORY,INVENTORY);
-        sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY,InventoryContract.PATH_INVENTORY +"/#",INVENTORY_ID);
+        //we're adding these uri's to UriMatcher. If the supplied uri matches either of these, it returns the 3rd input.
+        //UriMatcher.addUri(String authority, String path, int return_code)
+        sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY,InventoryContract.PATH_INVENTORY,INVENTORY); //com.example.cr554.inventoryapp, database, 100
+        sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY,InventoryContract.PATH_INVENTORY +"/#",INVENTORY_ID); //com.example.cr554.inventoryapp, /#, 101
     }
 
     @Override
@@ -39,9 +40,7 @@ public class InventoryProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         //get readable database
         SQLiteDatabase database = mDbHelper.getReadableDatabase();
-
         Cursor cursor;
-        //match the uri to a specific code;
         int match = sUriMatcher.match(uri);
         //perform appropriate query
         switch (match) {
@@ -68,7 +67,6 @@ public class InventoryProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Cant Query");
         }
-
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
@@ -82,12 +80,10 @@ public class InventoryProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("cant insert");
         }
-        //update views?
-
     }
 
     private Uri insertEntry(Uri uri, ContentValues contentValues){
-        //validate
+        //TODO:validate
 
         //get db to write
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
@@ -115,7 +111,7 @@ public class InventoryProvider extends ContentProvider {
         }
     }
     private int updateEntry(Uri uri, ContentValues contentValues,String selection, String[] selectionArgs){
-        //validate
+        //TODO:validate
 
         //get writable db
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
