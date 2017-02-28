@@ -34,7 +34,7 @@ import com.example.cr554.inventoryapp.database.InventoryContract.InventoryEntry;
  */
 
 public class EditActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
-    private static final int EXISTING_PET_LOADER =0;
+    private static final int EXISTING_INVENTORY_LOADER =0;
     private Uri mCurrentItemUri;
     private EditText mNameEditText;
     private EditText mSupplierEditText;
@@ -66,7 +66,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             //get current URI's info for each file
 
             setTitle("Edit Item");
-            getLoaderManager().initLoader(EXISTING_PET_LOADER,null,this);
+            getLoaderManager().initLoader(EXISTING_INVENTORY_LOADER,null,this);
         }
         //set onclick for submit
         submitButton.setOnClickListener(new View.OnClickListener(){

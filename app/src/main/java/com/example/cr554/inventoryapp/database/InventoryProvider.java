@@ -13,20 +13,24 @@ import com.example.cr554.inventoryapp.database.InventoryContract.InventoryEntry;
 /**
  * Created by cr554 on 2/23/2017.
  * Content Provider for the inventory database
- * ContentProviders
  */
 
 public class InventoryProvider extends ContentProvider {
 
-
+    private InventoryDBHelper mDbHelper;
     private static final int INVENTORY = 100;
     private static final int INVENTORY_ID= 101;
-    private InventoryDBHelper mDbHelper;
+    /*UriMatcher -
+
+
+
+     */
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static{
         sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY,InventoryContract.PATH_INVENTORY,INVENTORY);
         sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY,InventoryContract.PATH_INVENTORY +"/#",INVENTORY_ID);
     }
+
 
     @Override
     public boolean onCreate(){
