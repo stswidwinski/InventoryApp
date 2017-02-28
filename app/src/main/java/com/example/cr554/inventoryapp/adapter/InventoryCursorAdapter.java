@@ -11,10 +11,10 @@ import android.widget.TextView;
 import com.example.cr554.inventoryapp.R;
 import com.example.cr554.inventoryapp.database.InventoryContract;
 
-import org.w3c.dom.Text;
-
 /**
  * Created by cr554 on 2/24/2017.
+ * A custom Cursor Adapter for the Inventory Database.
+ * The Cursor adapter takes info from a Cursor and displays it to a list view.
  */
 
 public class InventoryCursorAdapter extends CursorAdapter {
@@ -35,7 +35,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
         TextView priceTextView = (TextView) view.findViewById(R.id.product_price);
         TextView quantityTextView = (TextView) view.findViewById(R.id.product_quantity);
 
-        //find the columns
+        //find the columns in the cursor
         int nameColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME);
         int supplierColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_SUPPLIER);
         int priceColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRICE);
@@ -50,8 +50,8 @@ public class InventoryCursorAdapter extends CursorAdapter {
         //update the views
         nameTextView.setText(name);
         supplierTextView.setText(supplier);
-        priceTextView.setText(Double.toString(price));
-        quantityTextView.setText(quantity);
+        priceTextView.setText(String.valueOf(price));
+        quantityTextView.setText(String.valueOf(quantity));
 
     }
 }

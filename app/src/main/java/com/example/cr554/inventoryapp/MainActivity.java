@@ -22,7 +22,6 @@ import com.example.cr554.inventoryapp.database.InventoryContract.InventoryEntry;
 
 public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>{
-    private InventoryDBHelper mDbHelper;
     private static final int INVENTORY_LOADER =0;
     InventoryCursorAdapter mCursorAdapter;
 
@@ -60,51 +59,9 @@ public class MainActivity extends AppCompatActivity implements
 
         //launch loader
         getLoaderManager().initLoader(INVENTORY_LOADER,null,this);
-
-        //access the database by instantiating the InventoryDBHelper subclass of SQLiteOpenHelper
-        mDbHelper = new InventoryDBHelper(this);
     }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-        displayDBInfo();
-    }
 
-    //temp func to display DB info to the screen
-    private void displayDBInfo(){
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        String[] projection={
-                InventoryEntry._ID,
-                InventoryEntry.COLUMN_NAME,
-                InventoryEntry.COLUMN_SUPPLIER,
-                InventoryEntry.COLUMN_PRICE,
-                InventoryEntry.COLUMN_QUANTITY
-        };
-
-        Cursor cursor= db.query(
-                InventoryEntry.TABLE_NAME,  //table to querey
-                projection,                 //columns to return
-                null,                       //Where clause column
-                null,                       //Where clause value
-                null,                       //group rows
-                null,                       //row group filter
-                null);                      //sort order
-        TextView dbDisplay = (TextView) findViewById(R.id.db_info);
-        try{
-            dbDisplay.setText("The inventory table contains: "+cursor.getCount()+" pets.\n\n");
-            dbDisplay.append(InventoryEntry._ID + " - " +
-                    InventoryEntry.COLUMN_NAME + " - " +
-                    InventoryEntry.COLUMN_SUPPLIER + " - " +
-                    InventoryEntry.COLUMN_PRICE + " - " +
-                    InventoryEntry.COLUMN_QUANTITY + "\n");
-
-
-        }finally{
-            cursor.close();
-        }
-    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -114,7 +71,10 @@ public class MainActivity extends AppCompatActivity implements
                 InventoryEntry.COLUMN_PRICE,
                 InventoryEntry.COLUMN_QUANTITY};
 
-        return new CursorLoader(this,               //parent activity context
+        //the Loader calls InventoryProvider.query(param) with the given params.
+        //query will query database based on the params given here, and return a cursor
+        //with the appropriate information in it.
+        return new CursorLoader(this,               //parent activity context (main activity)
                 InventoryEntry.CONTENT_URI,         //uri of current item
                 projection,                         //columns to include in the cursor
                 null,                               //null selection clause
