@@ -102,6 +102,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             }else{
                 Toast.makeText(this,"delete success",Toast.LENGTH_SHORT).show();
             }
+            finish();
         }
     }
 

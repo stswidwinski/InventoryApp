@@ -136,6 +136,7 @@ public class InventoryProvider extends ContentProvider {
             case INVENTORY:
                 // Delete all rows that match the selection and selection args
                 rowsDeleted = database.delete(InventoryEntry.TABLE_NAME, selection, selectionArgs);
+
                 break;
             case INVENTORY_ID:
                 // Delete a single row given by the ID in the URI
@@ -146,6 +147,7 @@ public class InventoryProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Deletion is not supported for: " + uri);
         }
+        getContext().getContentResolver().notifyChange(uri,null);
         return rowsDeleted;
     }
 
