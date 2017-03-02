@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:id="@+id/edit_view">
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_name"
+        android:hint="@string/edit_name"
+        android:inputType="textCapWords" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_supplier"
+        android:hint="@string/edit_supplier"
+        android:inputType="textCapWords"
+        android:layout_below="@+id/edit_name"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_price"
+        android:hint="@string/edit_price"
+        android:inputType="numberDecimal"
+        android:layout_below="@+id/edit_supplier"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_quantity"
+        android:hint="@string/edit_quantity"
+        android:inputType="number"
+        android:layout_below="@+id/edit_price"/>
+    <Button
+        android:layout_width="96dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/submit"
+        android:text="Submit"/>
+    <Button
+        android:layout_width="96dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="96dp"
+        android:id="@+id/cancel"
+        android:text="Cancel"/>
+    <Button
+        android:layout_width="96dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/delete"
+        android:text="delete"/>
+</RelativeLayout>
+
+<!-- TODO: String resource file all of the hard coded strings -->
